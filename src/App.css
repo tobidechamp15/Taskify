@@ -1,38 +1,122 @@
-.App {
-  text-align: center;
+.form__group {
+  position: relative;
+  padding: 20px 0 0;
+  width: 100%;
+  /* max-width: 180px; */
 }
 
-.App-logo {
-  height: 40vmin;
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #9b9b9b;
+  border-top: -0;
+  outline: 0;
+  font-size: 17px;
+  /* color: #fff; */
+  padding: 7px;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 17px;
+  cursor: text;
+  top: 20px;
+  padding: 7px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #070ab3;
+  font-weight: 600;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #116399, #38caef);
+  border-image-slice: 1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: -10px;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #38caef;
+  font-weight: 700;
+}
+
+/* reset input */
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+g {
+  transform: matrix(1.15, 0, 0, 1.15, -5.75, 0);
+  fill: rgb(251, 156, 42);
+}
+g {
+  transform: matrix(1.55556, 0, 0, 1.55556, 118.222, 99.5066);
+  fill: url(#SvgjsLinearGradient1748);
+  transform: matrix(3.54653, 0, 0, 3.54653, 21, 239.839);
+  fill: rgb(19, 125, 197);
+}
+/* Style for the modal container */
+.error-modal {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1; /* Ensure it's above other content */
 }
 
-.App-link {
-  color: #61dafb;
+/* Style for the modal content */
+.error-content {
+  background-color: #fff; /* Background color */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Drop shadow */
+  text-align: center;
+  padding: 20px;
+  height: 50%;
+  width: 60%;
+  /* padding: 10%; */
+  position: relative;
+  /* width: 300px; Adjust the width as needed */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Style for the close button (X) */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
 }
+
+/* Style for the error message text */
+.error-message {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+/* Additional styles (you can customize these) */
+/* Add background color, text color, fonts, etc. as needed */
