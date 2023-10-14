@@ -6,6 +6,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -14,11 +15,18 @@ const Signup = () => {
   const [showErrorModal, setShowErrorModal] = useState(false); // To control modal visibility
   const [errorMessage, setErrorMessage] = useState(""); // To store the error message
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const handleSubmit = async (e) => {
     let auth = getAuth();
     e.preventDefault();
+    if (!navigator.onLine) {
+      // Handle the case where the user is offline
+      setErrorMessage(
+        "No internet connection. Please check your connection and try again."
+      );
+      setShowErrorModal(true);
+      return;
+    }
     console.log(email, password);
 
     if (password === confirmPassword) {
@@ -47,7 +55,7 @@ const Signup = () => {
 
   return (
     <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
-      <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] sm:h-[70%]  p-[5%] md:p-[5%} shadow-lg">
+      <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] lg:w-[30%] sm:h-[70%]  p-[5%] md:p-[5%} shadow-lg">
         <div className="flex flex-col justify-center w-full items-center">
           <img src={logo} alt="logo" className="w-[100px]" />
         </div>
@@ -96,7 +104,7 @@ const Signup = () => {
             <label htmlFor="name" className="form__label">
               Confirm Password
             </label>
-            <span className="text-red-500 my-[15px]">{confirmPasswordError}</span>
+            <span className="text-red-500 my-[15px]  ">{confirmPasswordError}</span>
           </div>
 
           <div>
@@ -109,7 +117,11 @@ const Signup = () => {
           </div>
         </form>
         <section>
-          <span></span>
+          <span>If you're a member,   </span>
+          <NavLink to='/'>
+
+          <button className="btn bg-yellow-500 text-white hover:bg-amber-500 font-bold  ">Login </button>
+          </NavLink>
         </section>
       </div>
       {showErrorModal && (
