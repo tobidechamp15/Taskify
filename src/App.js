@@ -1,10 +1,11 @@
 import "./App.css";
+import Signup from "./component/Signup";
 
 function App() {
   return (
-    <div className="App">
-      <h1>To do App May God help us</h1>
-    </div>
+    <>
+      <Signup />
+    </>
   );
 }
 
