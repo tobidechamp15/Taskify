@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import app from "./firebase/config";
-import firebase from "firebase/app";
+import { app } from "./firebase/config";
+// import firebase from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,7 @@ const Signup = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const handleSubmit = async (e) => {
-    let auth = getAuth();
+    let auth = getAuth(app);
     e.preventDefault();
     if (!navigator.onLine) {
       // Handle the case where the user is offline
@@ -30,17 +30,21 @@ const Signup = () => {
     console.log(email, password);
 
     if (password === confirmPassword) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((response) => {
-          console.log(response.user);
-        })
-        .catch((err) => {
-          setErrorMessage("This user already exists");
-          setShowErrorModal(true);
-          // alert(err.message);
-        });
+      try {
+        const response = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        // (response) => {
+        console.log(response.user);
+      } catch (err) {
+        setErrorMessage("This user already exists", err);
+        setShowErrorModal(true);
+        // alert(err.message);
+      }
     } else {
-      console.log("object")
+      console.log("object");
       setConfirmPasswordError("Password do not match.");
     }
   };
@@ -104,23 +108,23 @@ const Signup = () => {
             <label htmlFor="name" className="form__label">
               Confirm Password
             </label>
-            <span className="text-red-500 my-[15px]  ">{confirmPasswordError}</span>
+            <span className="text-red-500 my-[15px]  ">
+              {confirmPasswordError}
+            </span>
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="btn btn-outline-primary"
-            >
+            <button type="submit" className="btn btn-outline-primary">
               Sign Up
             </button>
           </div>
         </form>
         <section>
-          <span>If you're a member,   </span>
-          <NavLink to='/'>
-
-          <button className="btn bg-yellow-500 text-white hover:bg-amber-500 font-bold  ">Login </button>
+          <span>If youre a member, </span>
+          <NavLink to="/">
+            <button className="btn bg-yellow-500 text-white hover:bg-amber-500 font-bold  ">
+              Login{" "}
+            </button>
           </NavLink>
         </section>
       </div>
