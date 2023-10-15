@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import app from "./firebase/config";
-import firebase from "firebase/app";
+import { app } from "./firebase/config";
+// import firebase from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,7 @@ const Signup = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const handleSubmit = async (e) => {
-    let auth = getAuth();
+    let auth = getAuth(app);
     e.preventDefault();
     if (!navigator.onLine) {
       // Handle the case where the user is offline
@@ -30,17 +30,21 @@ const Signup = () => {
     console.log(email, password);
 
     if (password === confirmPassword) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((response) => {
-          console.log(response.user);
-        })
-        .catch((err) => {
-          setErrorMessage("This user already exists");
-          setShowErrorModal(true);
-          // alert(err.message);
-        });
+      try {
+        const response = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        // (response) => {
+        console.log(response.user);
+      } catch (err) {
+        setErrorMessage("This user already exists", err);
+        setShowErrorModal(true);
+        // alert(err.message);
+      }
     } else {
-      console.log("object")
+      console.log("object");
       setConfirmPasswordError("Password do not match.");
     }
   };
@@ -55,7 +59,7 @@ const Signup = () => {
 
   return (
     <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
-      <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] lg:w-[30%] sm:h-[70%]  p-[5%] md:p-[5%} shadow-lg">
+      <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] form-width lg:w-[30%] sm:h-  p-[5%] md:p-[5%} shadow-lg">
         <div className="flex flex-col justify-center w-full items-center">
           <img src={logo} alt="logo" className="w-[100px]" />
         </div>
@@ -104,23 +108,23 @@ const Signup = () => {
             <label htmlFor="name" className="form__label">
               Confirm Password
             </label>
-            <span className="text-red-500 my-[15px]  ">{confirmPasswordError}</span>
+            <span className="text-red-500 my-[15px]  ">
+              {confirmPasswordError}
+            </span>
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="btn btn-outline-primary"
-            >
+            <button type="submit" className="btn btn-outline-primary">
               Sign Up
             </button>
           </div>
         </form>
-        <section>
-          <span>If you're a member,   </span>
-          <NavLink to='/'>
-
-          <button className="btn bg-yellow-500 text-white hover:bg-amber-500 font-bold  ">Login </button>
+        <section className="my-4">
+          <span>If you are a member ,  please </span>
+          <NavLink to="/">
+            <button className="btn bg-green-600 text-white hover:bg-green-500 font-bold  ">
+              Login{" "}
+            </button>
           </NavLink>
         </section>
       </div>
