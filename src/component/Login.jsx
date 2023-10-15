@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/logo.png";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "./firebase/config";
+import {
+  faCircleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [showErrorModal, setShowErrorModal] = useState(false); 
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,7 +29,6 @@ const Login = () => {
     }
     try {
       const auth = getAuth(app);
-      console.log(auth.currentUser.email);
       const userCredentials = await signInWithEmailAndPassword(
         auth,
         email,
@@ -32,9 +37,30 @@ const Login = () => {
       const user = userCredentials.user;
       console.log(user);
     } catch (error) {
-      console.error("Login error:", error);
+      if (error) {
+        handleLoginError();
+      }
     }
   };
+
+  const closeErrorModal = () => {
+    setShowErrorModal(false);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setLoginError(false);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setLoginError(false);
+  };
+
+  const handleLoginError = () => {
+    setLoginError(true);
+  };
+  
   return (
     <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
       <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] form-width md:w-[50%] lg:w-[30%] sm:h-[70%]  p-[5%] md:p-[5%} shadow-lg">
@@ -44,17 +70,24 @@ const Login = () => {
         <div className="text-2xl text-blue-400 font-bold text-center">
           Welcome Back !
         </div>
+
         <form
           onSubmit={handleLogin}
           className="flex flex-col gap-2 text-black  items-center justify-center self-center w-100 "
         >
+          {loginError && (
+            <div className="flex self-baseline text-red-500 font-semibold items-center gap-2 my-2">
+              Incorrect email address or password{" "}
+              <FontAwesomeIcon icon={faCircleExclamation} bounce />
+            </div>
+          )}
           <div className="form__group field">
             <input
               type="email"
               className="form__field"
               placeholder="Name"
               value={email} // set value to email state
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               required
             />
             <label htmlFor="name" className="form__label">
@@ -67,7 +100,7 @@ const Login = () => {
               className="form__field"
               placeholder="Name"
               value={password} // set value to password state
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               required
             />
             <label htmlFor="name" className="form__label">
@@ -82,7 +115,7 @@ const Login = () => {
           </div>
         </form>
         <section className="my-4">
-          <span>Not registered yet?  </span>
+          <span>Not registered yet? </span>
           <NavLink to="/register">
             <button className="btn bg-yellow-500 text-white hover:bg-amber-500 font-bold  ">
               Sign up
@@ -90,7 +123,7 @@ const Login = () => {
           </NavLink>
         </section>
       </div>
-      {/* {showErrorModal && (
+      {showErrorModal && (
         <div className="error-modal">
           <div className="error-content flex flex-col justify-center items-center">
             <div
@@ -102,7 +135,7 @@ const Login = () => {
             <p className="text-red-400  font-bold text-2xl">{errorMessage}</p>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
