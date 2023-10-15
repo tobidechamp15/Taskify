@@ -59,7 +59,7 @@ const Signup = () => {
 
   return (
     <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
-      <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] lg:w-[30%] sm:h-[70%]  p-[5%] md:p-[5%} shadow-lg">
+      <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] form-width lg:w-[30%] sm:h-  p-[5%] md:p-[5%} shadow-lg">
         <div className="flex flex-col justify-center w-full items-center">
           <img src={logo} alt="logo" className="w-[100px]" />
         </div>
@@ -119,10 +119,10 @@ const Signup = () => {
             </button>
           </div>
         </form>
-        <section>
-          <span>If youre a member, </span>
+        <section className="my-4">
+          <span>If you are a member ,  please </span>
           <NavLink to="/">
-            <button className="btn bg-yellow-500 text-white hover:bg-amber-500 font-bold  ">
+            <button className="btn bg-green-600 text-white hover:bg-green-500 font-bold  ">
               Login{" "}
             </button>
           </NavLink>

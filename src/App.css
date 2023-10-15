@@ -118,5 +118,8 @@ g {
   margin: 10px 0;
 }
 
-/* Additional styles (you can customize these) */
-/* Add background color, text color, fonts, etc. as needed */
+@media (min-width: 1024px) and (max-width:1361px) {
+  .form-width {
+    width: 50% !important;
+  }
+}
