@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import logo from "../assets/logo.png";
-import { app } from "./firebase/config";
+import { app, db } from "./firebase/config";
+import {doc, setDoc} from "firebase/firestore"
 // import firebase from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -31,8 +36,6 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log(email, password);
-
     if (password === confirmPassword) {
       try {
         const response = await createUserWithEmailAndPassword(
@@ -40,21 +43,47 @@ const Signup = () => {
           email,
           password
         );
-        // (response) => {
+        createUserProfile(response.user);
+        await sendEmailVerification(response.user);
+
         console.log(response.user);
       } catch (err) {
-        setErrorMessage("This user already exists", err);
-        setShowErrorModal(true);
-        
+        if (err.code === "auth/email-already-in-use") {
+          setErrorMessage("This user already exists", err);
+          setShowErrorModal(true);
+        }
+        if (err.code === "auth/weak-password") {
+          setErrorMessage("Password should not be less than 6 characters", err);
+          setShowErrorModal(false);
+        }
+
         setLoading(false);
         // alert(err.message);
       } finally {
         setLoading(false);
       }
     } else {
-      console.log("object");
+      setLoading(false);
       setConfirmPasswordError("Password do not match.");
     }
+  };
+
+  const createUserProfile = (user) => {
+    const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
+
+    // Define the user profile data
+    const userProfileData = {
+      email: user.email,
+      // Add other user-specific data as needed
+    };
+
+    setDoc(userDocRef, userProfileData)
+      .then(() => {
+        console.log("User profile created successfully");
+      })
+      .catch((error) => {
+        console.error("Error creating user profile:", error);
+      });
   };
 
   const closeErrorModal = () => {
@@ -64,6 +93,10 @@ const Signup = () => {
   // useEffect(() => {
   //   setIsButtonDisabled(password !== confirmPassword);
   // }, [password, confirmPassword]);
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    setConfirmPasswordError("");
+  };
 
   return (
     <>
@@ -75,7 +108,7 @@ const Signup = () => {
             <div className="flex flex-col justify-center w-full items-center">
               <img src={logo} alt="logo" className="w-[100px]" />
             </div>
-            <div className="text-2xl text-blue-400 font-bold text-center">
+            <div className="text-2xl text-blue-400 font-bold text-center mb-4 mt-4">
               Sign Up to Continue
             </div>
             <form
@@ -107,6 +140,7 @@ const Signup = () => {
                 <label htmlFor="name" className="form__label">
                   Password
                 </label>
+                <span className="text-red-600">{errorMessage}</span>
               </div>
               <div className="form__group field">
                 <input
@@ -114,7 +148,7 @@ const Signup = () => {
                   className="form__field"
                   placeholder="Name"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={handleConfirmPasswordChange}
                   required
                 />
                 <label htmlFor="name" className="form__label">
