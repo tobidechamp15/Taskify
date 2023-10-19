@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { app, db } from "./firebase/config";
 import { doc, setDoc } from "firebase/firestore";
@@ -124,9 +125,9 @@ const Signup = () => {
       ) : (
         <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
           <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] form-width lg:w-[30%] sm:h-  p-[5%] md:p-[5%} shadow-lg">
-            <div className="flex flex-col justify-center w-full items-center">
+            <Link to="/" className="flex flex-col justify-center w-full items-center">
               <img src={logo} alt="logo" className="w-[100px]" />
-            </div>
+            </Link>
             <div className="text-2xl text-blue-400 font-bold text-center mb-4 mt-4">
               Sign Up to Continue
             </div>
@@ -204,7 +205,7 @@ const Signup = () => {
             </form>
             <section className="my-4">
               <span>If you are a member </span>
-              <NavLink to="/">
+              <NavLink to="/login">
                 <button className="btn bg-green-600 text-white hover:bg-green-500 font-bold  ">
                   Login
                 </button>
