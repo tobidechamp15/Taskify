@@ -1,14 +1,16 @@
 import React from "react";
 import logo from "../assets/white logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-evenly bg-blue-700 py-2 fixed top-0 w-100">
+    <div className="flex justify-between xsm:px-4 md:justify-evenly bg-blue-700 py-2 fixed top-0 w-100 items-center">
       <Link to="/">
         <img src={logo} className="w-[110px]" />
       </Link>
-      <div className="flex justify-evenly items-center gap-3 ">
+      <div className="hidden md:flex justify-evenly items-center gap-3 ">
         <Link
           to="/"
           className="text-slate-100 text-xl cursor-pointer font-semibold hover:text-blue-400 transition-all duration-500 ease-in-out  "
@@ -34,6 +36,9 @@ const Navbar = () => {
           Try it Free
         </Link>
       </div>
+      <section className="text-white  flex md:hidden">
+        <FontAwesomeIcon icon={faBars} size="2xl" />
+      </section>
     </div>
   );
 };
