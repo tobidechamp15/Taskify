@@ -1,7 +1,7 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import { app, db } from "./firebase/config";
-import {doc, setDoc} from "firebase/firestore"
+import { doc, setDoc } from "firebase/firestore";
 // import firebase from "firebase/app";
 import {
   getAuth,
@@ -15,13 +15,16 @@ import { NavLink } from "react-router-dom";
 import Loader from "./Loader";
 
 const Signup = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false); // To control modal visibility
   const [errorMessage, setErrorMessage] = useState(""); // To store the error message
+  const [passwordError, setPasswordError] = useState(""); // To store the error message
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
   if (!navigator.onLine) {
     // Handle the case where the user is offline
@@ -43,9 +46,10 @@ const Signup = () => {
           email,
           password
         );
-        createUserProfile(response.user);
+        createUserProfile(response.user, username);
         await sendEmailVerification(response.user);
-
+        window.location.href = "/login";
+        // useNavigate("/");
         console.log(response.user);
       } catch (err) {
         if (err.code === "auth/email-already-in-use") {
@@ -53,7 +57,10 @@ const Signup = () => {
           setShowErrorModal(true);
         }
         if (err.code === "auth/weak-password") {
-          setErrorMessage("Password should not be less than 6 characters", err);
+          setPasswordError(
+            "Password should not be less than 6 characters",
+            err
+          );
           setShowErrorModal(false);
         }
 
@@ -68,11 +75,12 @@ const Signup = () => {
     }
   };
 
-  const createUserProfile = (user) => {
+  const createUserProfile = (user, username) => {
     const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
 
     // Define the user profile data
     const userProfileData = {
+      username: username,
       email: user.email,
       // Add other user-specific data as needed
     };
@@ -90,12 +98,23 @@ const Signup = () => {
     setShowErrorModal(false);
   };
 
+  function isValidUsername(username) {
+    // Check if username has at least 8 characters and contains at least one number
+    const regex = /^(?=.*[0-9]).{8,}$/;
+    return regex.test(username);
+  }
+
   // useEffect(() => {
   //   setIsButtonDisabled(password !== confirmPassword);
   // }, [password, confirmPassword]);
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
     setConfirmPasswordError("");
+  };
+  const handleUsername = (e) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    setIsValid(isValidUsername(newUsername));
   };
 
   return (
@@ -115,6 +134,25 @@ const Signup = () => {
               onSubmit={handleSubmit}
               className="flex flex-col gap-2 text-black  items-center justify-center self-center w-100 "
             >
+              <div className="form__group field">
+                <input
+                  type="text"
+                  className="form__field"
+                  placeholder="Name"
+                  value={username} // set value to email state
+                  onChange={handleUsername}
+                  required
+                />
+                <label htmlFor="name" className="form__label">
+                  Username
+                </label>
+                {!isValid && (
+                  <p className="text-red-500 ">
+                    Username must have at least 8 characters and contain at
+                    least one number.
+                  </p>
+                )}
+              </div>
               <div className="form__group field">
                 <input
                   type="email"
@@ -140,7 +178,7 @@ const Signup = () => {
                 <label htmlFor="name" className="form__label">
                   Password
                 </label>
-                <span className="text-red-600">{errorMessage}</span>
+                <span className="text-red-600">{passwordError}</span>
               </div>
               <div className="form__group field">
                 <input
@@ -158,7 +196,6 @@ const Signup = () => {
                   {confirmPasswordError}
                 </span>
               </div>
-
               <div>
                 <button type="submit" className="btn btn-outline-primary">
                   Sign Up
@@ -166,10 +203,10 @@ const Signup = () => {
               </div>
             </form>
             <section className="my-4">
-              <span>If you are a member , please </span>
+              <span>If you are a member </span>
               <NavLink to="/">
                 <button className="btn bg-green-600 text-white hover:bg-green-500 font-bold  ">
-                  Login{" "}
+                  Login
                 </button>
               </NavLink>
             </section>
