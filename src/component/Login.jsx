@@ -17,7 +17,6 @@ const Login = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -43,7 +42,7 @@ const Login = () => {
         handleLoginError();
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -85,7 +84,7 @@ const Login = () => {
             >
               {loginError && (
                 <div className="flex self-baseline text-red-500 font-semibold items-center gap-2 my-2">
-                  Incorrect email address or password{" "}
+                  Incorrect email address or password
                   <FontAwesomeIcon icon={faCircleExclamation} bounce />
                 </div>
               )}

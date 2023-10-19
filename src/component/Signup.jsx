@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import { app } from "./firebase/config";
+import { app, db } from "./firebase/config";
+import { doc, setDoc } from "firebase/firestore";
 // import firebase from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -10,13 +15,16 @@ import { NavLink } from "react-router-dom";
 import Loader from "./Loader";
 
 const Signup = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false); // To control modal visibility
   const [errorMessage, setErrorMessage] = useState(""); // To store the error message
+  const [passwordError, setPasswordError] = useState(""); // To store the error message
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
   if (!navigator.onLine) {
     // Handle the case where the user is offline
@@ -31,8 +39,6 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log(email, password);
-
     if (password === confirmPassword) {
       try {
         const response = await createUserWithEmailAndPassword(
@@ -40,30 +46,76 @@ const Signup = () => {
           email,
           password
         );
-        // (response) => {
+        createUserProfile(response.user, username);
+        await sendEmailVerification(response.user);
+        window.location.href = "/login";
+        // useNavigate("/");
         console.log(response.user);
       } catch (err) {
-        setErrorMessage("This user already exists", err);
-        setShowErrorModal(true);
-        
+        if (err.code === "auth/email-already-in-use") {
+          setErrorMessage("This user already exists", err);
+          setShowErrorModal(true);
+        }
+        if (err.code === "auth/weak-password") {
+          setPasswordError(
+            "Password should not be less than 6 characters",
+            err
+          );
+          setShowErrorModal(false);
+        }
+
         setLoading(false);
         // alert(err.message);
       } finally {
         setLoading(false);
       }
     } else {
-      console.log("object");
+      setLoading(false);
       setConfirmPasswordError("Password do not match.");
     }
+  };
+
+  const createUserProfile = (user, username) => {
+    const userDocRef = doc(db, "users", user.uid); // Reference to the user's document using their UID
+
+    // Define the user profile data
+    const userProfileData = {
+      username: username,
+      email: user.email,
+      // Add other user-specific data as needed
+    };
+
+    setDoc(userDocRef, userProfileData)
+      .then(() => {
+        console.log("User profile created successfully");
+      })
+      .catch((error) => {
+        console.error("Error creating user profile:", error);
+      });
   };
 
   const closeErrorModal = () => {
     setShowErrorModal(false);
   };
 
+  function isValidUsername(username) {
+    // Check if username has at least 8 characters and contains at least one number
+    const regex = /^(?=.*[0-9]).{8,}$/;
+    return regex.test(username);
+  }
+
   // useEffect(() => {
   //   setIsButtonDisabled(password !== confirmPassword);
   // }, [password, confirmPassword]);
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    setConfirmPasswordError("");
+  };
+  const handleUsername = (e) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    setIsValid(isValidUsername(newUsername));
+  };
 
   return (
     <>
@@ -75,13 +127,32 @@ const Signup = () => {
             <div className="flex flex-col justify-center w-full items-center">
               <img src={logo} alt="logo" className="w-[100px]" />
             </div>
-            <div className="text-2xl text-blue-400 font-bold text-center">
+            <div className="text-2xl text-blue-400 font-bold text-center mb-4 mt-4">
               Sign Up to Continue
             </div>
             <form
               onSubmit={handleSubmit}
               className="flex flex-col gap-2 text-black  items-center justify-center self-center w-100 "
             >
+              <div className="form__group field">
+                <input
+                  type="text"
+                  className="form__field"
+                  placeholder="Name"
+                  value={username} // set value to email state
+                  onChange={handleUsername}
+                  required
+                />
+                <label htmlFor="name" className="form__label">
+                  Username
+                </label>
+                {!isValid && (
+                  <p className="text-red-500 ">
+                    Username must have at least 8 characters and contain at
+                    least one number.
+                  </p>
+                )}
+              </div>
               <div className="form__group field">
                 <input
                   type="email"
@@ -107,6 +178,7 @@ const Signup = () => {
                 <label htmlFor="name" className="form__label">
                   Password
                 </label>
+                <span className="text-red-600">{passwordError}</span>
               </div>
               <div className="form__group field">
                 <input
@@ -114,7 +186,7 @@ const Signup = () => {
                   className="form__field"
                   placeholder="Name"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={handleConfirmPasswordChange}
                   required
                 />
                 <label htmlFor="name" className="form__label">
@@ -124,7 +196,6 @@ const Signup = () => {
                   {confirmPasswordError}
                 </span>
               </div>
-
               <div>
                 <button type="submit" className="btn btn-outline-primary">
                   Sign Up
@@ -132,10 +203,10 @@ const Signup = () => {
               </div>
             </form>
             <section className="my-4">
-              <span>If you are a member , please </span>
+              <span>If you are a member </span>
               <NavLink to="/">
                 <button className="btn bg-green-600 text-white hover:bg-green-500 font-bold  ">
-                  Login{" "}
+                  Login
                 </button>
               </NavLink>
             </section>
