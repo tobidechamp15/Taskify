@@ -1,12 +1,19 @@
-import React from 'react'
-import Navbar from "./Navbar"
+import React, { useState } from "react";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 const Landing = () => {
+  const [isVisible, setVisible] = useState("");
+
+  const toggleSidebar = () => {
+    setVisible(!isVisible);
+  };
   return (
     <div>
-      <Navbar />
+      <Navbar toggleSidebar={toggleSidebar} isVisible={isVisible} />
+      <Sidebar isVisible={isVisible} toggleSidebar={toggleSidebar} />
     </div>
-  )
-}
+  );                                                                                                                                
+};
 
-export default Landing
+export default Landing;

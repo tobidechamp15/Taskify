@@ -2,9 +2,10 @@ import React from "react";
 import logo from "../assets/white logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar, isVisible }) => {
   return (
     <div className="flex justify-between xsm:px-4 md:justify-evenly bg-blue-700 py-2 fixed top-0 w-100 items-center">
       <Link to="/">
@@ -36,11 +37,27 @@ const Navbar = () => {
           Try it Free
         </Link>
       </div>
-      <section className="text-white  flex md:hidden">
-        <FontAwesomeIcon icon={faBars} size="2xl" />
-      </section>
+      {isVisible ? (
+        <section
+          className="text-white  flex md:hidden cursor-pointer"
+          onClick={toggleSidebar}
+        >
+          <FontAwesomeIcon icon={faX} size="2xl" />
+        </section>
+      ) : (
+        <section
+          className="text-white  flex md:hidden cursor-pointer"
+          onClick={toggleSidebar}
+        >
+          <FontAwesomeIcon icon={faBars} size="2xl" />
+        </section>
+      )}
     </div>
   );
+};
+Navbar.propTypes = {
+  toggleSidebar: PropTypes.func.isRequired, // Change the prop type and required status as needed
+  isVisible: false,
 };
 
 export default Navbar;

@@ -69,8 +69,8 @@ const Login = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
-          <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] form-width md:w-[50%] lg:w-[30%] sm:h-[70%]  p-[5%] md:p-[5%} shadow-lg">
+        <div className="w-100 flex flex-col justify-center items-center pt-[25%] -lg">
+          <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] form-width md:w-[50%] lg:w-[30%] sm:h-[70%]  p-[5%] md:p-[5%} shadow-lg overflow-auto">
             <NavLink to="/" className="flex flex-col justify-center w-full items-center">
               <img src={logo} alt="logo" className="w-[100px]" />
             </NavLink>

@@ -123,7 +123,7 @@ const Signup = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
+        <div className="w-100 flex flex-col justify-center items-center mt-[25%] -lg">
           <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] form-width lg:w-[30%] sm:h-  p-[5%] md:p-[5%} shadow-lg">
             <Link to="/" className="flex flex-col justify-center w-full items-center">
               <img src={logo} alt="logo" className="w-[100px]" />
