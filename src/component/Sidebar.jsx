@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 const Sidebar = ({ isVisible }) => {
   return (
     <div
-      className={`xs:flex hidden bg-slate-300 flex-col gap-2 relative top-[90px] p-1 pb-3 transition-all ease-in-out duration-500 ${
-        isVisible ? "left-0" : "left-full"
+      className={`  xsm:flex hidden bg-blue-300  flex-col gap-2 relative top-[90px] p-1 pb-3 transition-all ease-in-out duration-500 ${
+        isVisible ? "left-0  w-100" : "-left-full h-0 w-0 -z-10"
       }`}
     >
       <Link to="/" className="hover:text-blue-400">

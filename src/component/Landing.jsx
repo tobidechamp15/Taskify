@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import Home from "./Home";
 
 const Landing = () => {
   const [isVisible, setVisible] = useState("");
@@ -9,11 +10,14 @@ const Landing = () => {
     setVisible(!isVisible);
   };
   return (
-    <div>
-      <Navbar toggleSidebar={toggleSidebar} isVisible={isVisible} />
-      <Sidebar isVisible={isVisible} toggleSidebar={toggleSidebar} />
-    </div>
-  );                                                                                                                                
+    <section>
+      <div >
+        <Navbar toggleSidebar={toggleSidebar} isVisible={isVisible} />
+        <Sidebar isVisible={isVisible} toggleSidebar={toggleSidebar} />
+      </div>
+      <Home />
+    </section>
+  );
 };
 
 export default Landing;
