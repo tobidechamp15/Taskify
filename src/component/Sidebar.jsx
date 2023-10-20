@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const Sidebar = ({ isVisible }) => {
   return (
     <div
-      className={`xs:flex bg-slate-300 flex-col gap-2 relative top-[90px] p-1 pb-3 transition-all ease-in-out duration-500 ${
+      className={`xs:flex hidden bg-slate-300 flex-col gap-2 relative top-[90px] p-1 pb-3 transition-all ease-in-out duration-500 ${
         isVisible ? "left-0" : "left-full"
       }`}
     >
