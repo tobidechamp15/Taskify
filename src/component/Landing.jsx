@@ -13,9 +13,10 @@ const Landing = () => {
     <section>
       <div >
         <Navbar toggleSidebar={toggleSidebar} isVisible={isVisible} />
+        
         <Sidebar isVisible={isVisible} toggleSidebar={toggleSidebar} />
-      </div>
       <Home />
+      </div>
     </section>
   );
 };
