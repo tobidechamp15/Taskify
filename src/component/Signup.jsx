@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { app, db } from "./firebase/config";
@@ -27,14 +27,17 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(true);
 
-  if (!navigator.onLine) {
-    // Handle the case where the user is offline
-    setErrorMessage(
-      "No internet connection. Please check your connection and try again."
-    );
-    setShowErrorModal(true);
-    return;
-  }
+  useEffect(() => {
+    if (!navigator.onLine) {
+      // Handle the case where the user is offline
+      setErrorMessage(
+        "No internet connection. Please check your connection and try again."
+      );
+      setShowErrorModal(true);
+      return;
+    }
+  }, []); // Empty dependency array ensures this effect runs only once after component mount
+
   const handleSubmit = async (e) => {
     let auth = getAuth(app);
     e.preventDefault();
@@ -125,7 +128,10 @@ const Signup = () => {
       ) : (
         <div className="w-100 flex flex-col justify-center items-center mt-[25%] -lg">
           <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] form-width lg:w-[30%] sm:h-  p-[5%] md:p-[5%} shadow-lg">
-            <Link to="/" className="flex flex-col justify-center w-full items-center">
+            <Link
+              to="/"
+              className="flex flex-col justify-center w-full items-center"
+            >
               <img src={logo} alt="logo" className="w-[100px]" />
             </Link>
             <div className="text-2xl text-blue-400 font-bold text-center mb-4 mt-4">
