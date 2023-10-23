@@ -7,12 +7,12 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 const Sidebar = ({ isVisible, toggleSidebar }) => {
   return (
     <div
-      className={` absolute  xsm:flex hidden bg-blue-700  flex-col gap-2   p-[5%] justify-evenly pb-3 transition-all ease-in-out duration-500 ${
-        isVisible ? "left-0 h-screen w-100" : "-left-full h-0 w-0 -z-10"
+      className={`    md:hidden bg-blue-700  flex-col gap-2     transition-all ease-in-out duration-500 ${
+        isVisible ? "xsm:flex left-0 h-screen w-100 z-10 top-[0px] pb-3 fixed p-[5%] justify-evenly " : "-left-full h-0 w-0 -z-50"
       }`}
     >
-      <div onClick={toggleSidebar} className="text-white text-3xl  w-100">
-        <FontAwesomeIcon icon={faX} className=" cursor-pointer" />
+      <div onClick={toggleSidebar} className="text-white text-3xl  w-fit fixed right-[20px] top-[30px]">
+        <FontAwesomeIcon icon={faX} className=" cursor-pointer " />
       </div>
       <Link
         to="/"

@@ -1,4 +1,4 @@
-*{
+* {
   box-sizing: border-box;
 }
 /* Apply styles to the entire website's scrollbar for WebKit-based browsers (Chrome, Safari) */
@@ -10,7 +10,6 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar:hover {
   width: 10px; /* Width of the scrollbar */
   width: 10px; /* Width of the scrollbar */
-
 }
 
 body::-webkit-scrollbar-thumb {
@@ -193,5 +192,33 @@ g {
 
   100% {
     height: 89px;
+  }
+}
+
+.background-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.moving-image {
+  position: absolute;
+  top: 0;
+  left: 0%; /* Start position, completely outside the container */
+  width: 200%; /* Set the width of the image */
+  height: 100%;
+  opacity: .08;
+  background: url('./assets/bg-home.png');
+  background-size: cover;
+  animation: moveLeft 30s linear infinite; /* Adjust the duration as needed */
+}
+
+@keyframes moveLeft {
+  0% {
+    left: 0%; /* Start position, completely outside the container */
+  }
+  100% {
+    left: -100%; /* End position, completely outside the container */
   }
 }
