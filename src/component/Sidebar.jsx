@@ -8,7 +8,7 @@ const Sidebar = ({ isVisible, toggleSidebar }) => {
   return (
     <div
       className={`    md:hidden bg-blue-700  flex-col gap-2     transition-all ease-in-out duration-500 ${
-        isVisible ? "xsm:flex left-0 h-screen w-100 z-10 top-[0px] pb-3 fixed p-[5%] justify-evenly " : "-left-full h-0 w-0 -z-50"
+        isVisible ? "xsm:flex left-0 h-screen w-100 z-10 top-[0px] pb-3 fixed p-[5%] justify-evenly " : "-left-full h-0 w-0 -z-50 "
       }`}
     >
       <div onClick={toggleSidebar} className="text-white text-3xl  w-fit fixed right-[20px] top-[30px]">
