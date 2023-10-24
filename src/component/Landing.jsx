@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Home from "./Home";
+import Description from "./Description";
 
 const Landing = () => {
   const [isVisible, setVisible] = useState("");
@@ -15,6 +16,7 @@ const Landing = () => {
 
       <Sidebar isVisible={isVisible} toggleSidebar={toggleSidebar} />
       <Home />
+      <Description />
     </div>
   );
 };
