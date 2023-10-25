@@ -19,7 +19,11 @@ const Description = () => {
             <span className="md:text-xl md:w-1/2 xsm:py-[30%] ">
               Your solution to effortless task management and organization.
             </span>
-            <img src={organize} alt="organize" className="xsm:h-full md:w-1/2" />
+            <img
+              src={organize}
+              alt="organize"
+              className="xsm:h-full md:w-1/2"
+            />
           </div>
           <div className="md:h-screen flex justify-evenly items-center xsm:flex-col md:flex-row-reverse xsm-h-full bg-white p-[5%]">
             <span className="md:text-xl md:w-1/3   xsm:py-[30%]">
@@ -29,13 +33,15 @@ const Description = () => {
             </span>
             <img src={image3} alt="organize" className=" xsm:h-full md:w-1/2" />
           </div>
-          <div className="h-screen flex justify-evenly items-center xsm:flex-col  bg-slate-300  p-[5%]">
-            <section className="md:text-xl md:w-1/2 xsm:py-[30%]   flex items-center justify-center">
-              <span className="w-50 h-100">
-                Say goodbye to missed deadlines and uncompleted tasks.
-              </span>
-            </section>
-            <img src={organize} alt="organize" className=" xsm:h-full md:w-1/2" />
+          <div className="md:h-screen flex justify-evenly items-center xsm:flex-col  bg-slate-300  p-[5%] pb-[250px]">
+            <span className="md:text-xl md:w-1/2 xsm:py-[30%] ">
+              Say goodbye to missed deadlines and uncompleted tasks.
+            </span>
+            <img
+              src={organize}
+              alt="organize"
+              className=" xsm:h-full md:w-1/2"
+            />
           </div>
         </section>
       </section>

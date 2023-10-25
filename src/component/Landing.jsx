@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Home from "./Home";
 import Description from "./Description";
+import Contact from "./Contact";
 
 const Landing = () => {
   const [isVisible, setVisible] = useState("");
@@ -17,6 +18,7 @@ const Landing = () => {
       <Sidebar isVisible={isVisible} toggleSidebar={toggleSidebar} />
       <Home />
       <Description />
+      <Contact />
     </div>
   );
 };

@@ -207,8 +207,8 @@ g {
   left: 0%; /* Start position, completely outside the container */
   width: 200%; /* Set the width of the image */
   height: 100%;
-  opacity: .08;
-  background: url('./assets/bg-home.png');
+  opacity: 0.08;
+  background: url("./assets/bg-home.png");
   background-size: cover;
   animation: moveLeft 30s linear infinite; /* Adjust the duration as needed */
 }
