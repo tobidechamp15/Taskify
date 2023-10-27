@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const Navbar = ({ toggleSidebar, isVisible }) => {
   return (
-    <div className="shadow-lg flex justify-between xsm:px-4 md:justify-evenly z-10 bg-blue-700 py-2 fixed top-0 w-100 items-center">
+    <div className="shadow-lg flex justify-between xsm:px-4 md:justify-evenly bg-blue-700 py-2 fixed top-0 w-100 items-center z-40">
       <Link to="/">
         <img src={logo} className="w-[110px]" />
       </Link>
@@ -32,7 +32,7 @@ const Navbar = ({ toggleSidebar, isVisible }) => {
         </Link>
         <Link
           to="/login"
-          className="text-white text-xl cursor-pointer hover:text-slate-100 rounded-lg transition-all duration-500 ease-in-out bg-blue-400 p-2 "
+          className="text-white text-xl cursor-pointer hover:text-slate-100 rounded-lg transition-all duration-500 ease-in-out bg-[#617fd1] p-2 "
         >
           Try it Free
         </Link>

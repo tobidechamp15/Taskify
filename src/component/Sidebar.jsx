@@ -7,7 +7,7 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 const Sidebar = ({ isVisible, toggleSidebar }) => {
   return (
     <div
-      className={`    md:hidden bg-blue-700  flex-col gap-2     transition-all ease-in-out duration-500 ${
+      className={`    md:hidden bg-blue-700  flex-col gap-2  z-40 transition-all ease-in-out duration-500 ${
         isVisible ? "xsm:flex left-0 h-screen w-100 z-10 top-[0px] pb-3 fixed p-[5%] justify-evenly " : "-left-full h-0 w-0 -z-50 "
       }`}
     >
