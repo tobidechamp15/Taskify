@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/logo.png";
@@ -17,6 +18,8 @@ const Login = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -36,8 +39,13 @@ const Login = () => {
         password
       );
       const user = userCredentials.user;
-      console.log(user);
+      console.log(user.uid);
+      localStorage.setItem("userId", user.uid);
+
+      navigate("/addtask", { state: { user: user?.uid } });
+      navigate("/addtask", { state: { user: user?.uid } });
     } catch (error) {
+      console.log(error);
       if (error) {
         handleLoginError();
       }
@@ -61,6 +69,7 @@ const Login = () => {
   };
 
   const handleLoginError = () => {
+    setShowErrorModal;
     setLoginError(true);
   };
 
@@ -71,7 +80,10 @@ const Login = () => {
       ) : (
         <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
           <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] form-width md:w-[50%] lg:w-[30%]   p-[5%] md:p-[5%} shadow-lg overflow-auto">
-            <NavLink to="/" className="flex flex-col justify-center w-full items-center">
+            <NavLink
+              to="/"
+              className="flex flex-col justify-center w-full items-center"
+            >
               <img src={logo} alt="logo" className="w-[100px]" />
             </NavLink>
             <div className="text-2xl text-blue-400 font-bold text-center">
@@ -96,6 +108,7 @@ const Login = () => {
                   value={email} // set value to email state
                   onChange={handleEmailChange}
                   required
+                  autoComplete="on" // Set it to "on" or another appropriate string value
                 />
                 <label htmlFor="name" className="form__label">
                   Email
@@ -109,6 +122,7 @@ const Login = () => {
                   value={password} // set value to password state
                   onChange={handlePasswordChange}
                   required
+                  autoComplete="on" // Set it to "on" or another appropriate string value
                 />
                 <label htmlFor="name" className="form__label">
                   Password
