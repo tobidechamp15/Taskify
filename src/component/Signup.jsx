@@ -35,6 +35,9 @@ const Signup = () => {
       );
       setShowErrorModal(true);
       return;
+    } else {
+      setErrorMessage("");
+      setShowErrorModal(false);
     }
   }, []); // Empty dependency array ensures this effect runs only once after component mount
 
@@ -86,15 +89,20 @@ const Signup = () => {
     const userProfileData = {
       username: username,
       email: user.email,
+      verificationStatus: user.emailVerified,
       // Add other user-specific data as needed
     };
 
     setDoc(userDocRef, userProfileData)
       .then(() => {
-        console.log("User profile created successfully");
+        console.log("User profile added to the firestore successfully");
       })
       .catch((error) => {
-        console.error("Error creating user profile:", error);
+        console.error(
+          "Error creating user profile:",
+          error,
+          "collection creation error"
+        );
       });
   };
 

@@ -10,6 +10,7 @@ import "./App.css";
 import Signup from "./component/Signup";
 import Login from "./component/Login";
 import Landing from "./component/Landing";
+import TaskAdd from "./component/TaskAdd";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/addtask",
+    element: <TaskAdd />,
   },
 ]);
 
