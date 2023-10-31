@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";import { db } from "./firebase/config";
+import React, { useState, useEffect } from "react";
+import { db } from "./firebase/config";
 import { getDocs, collection } from "firebase/firestore";
 import AppNavbar from "./AppNavbar";
 
 const TaskAdd = () => {
-  const [error, setError] = useState(null);
   const [userData, setUserData] = useState([]);
   const users = collection(db, "users");
   // const { userId } = useLocation();
@@ -25,7 +25,7 @@ const TaskAdd = () => {
           setUserData(user);
         }
       } catch (err) {
-        setError(err);
+        alert(err);
         console.error(err);
       }
     };
@@ -37,13 +37,6 @@ const TaskAdd = () => {
   return (
     <div>
       <AppNavbar {...userData} />
-      <section className="flex bg-blue-400 text-white p-9 justify-evenly items-center">
-        <h2>Organize Your day today</h2>
-        <h1 className=" btn btn-outline-warning text-xl flex flex-end text-white ">
-          {userData.username}
-        </h1>
-      </section>
-      {error && <div>{ error}</div>}
     </div>
   );
 };
