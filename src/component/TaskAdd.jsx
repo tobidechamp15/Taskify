@@ -23,7 +23,6 @@ const TaskAdd = () => {
         const user = filteredData.find((data) => data.id === loggedInUser);
 
         if (user) {
-          console.log(userData);
           setUserData(user);
         }
       } catch (err) {
@@ -33,8 +32,6 @@ const TaskAdd = () => {
     };
     getUserData();
   }, [loggedInUser]);
-
-  // console.log("current User ", loggedInUser);
 
   return <div>{isLoggedIn ? <AppNavbar {...userData} /> : <NoUser />}</div>;
 };

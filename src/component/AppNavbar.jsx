@@ -11,13 +11,11 @@ const AppNavbar = (props) => {
   const handleDropdown = () => {
     setShowDropdownComponent(!showDropdownComponent);
   };
-  console.log(props);
   const user = props;
-  console.log(user);
   return (
     <div>
       <section className="flex justify-between px-[40px] bg-blue-700 items-center text-white">
-        <span>Organize your day today</span>
+        <span className="hidden md:flex">Organize your day today</span>
         <img src={logo} alt="logo" className="w-[130px]" />
         <section>
           <div
