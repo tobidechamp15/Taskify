@@ -20,10 +20,12 @@ const AppNavbar = (props) => {
         <span>Organize your day today</span>
         <img src={logo} alt="logo" className="w-[130px]" />
         <section>
-          <div className="flex gap-2 items-center md:bg-gray-100 md:rounded-2xl md:p-2">
+          <div
+            onClick={handleDropdown}
+            className="flex gap-2 items-center md:bg-gray-100 md:rounded-2xl md:p-2"
+          >
             <FontAwesomeIcon
               icon={faUser}
-              onClick={handleDropdown}
               className="text-xl bg-gray-300 rounded-full  p-[10px]"
             />
             <span className="text-blue-400 md:block hidden">
