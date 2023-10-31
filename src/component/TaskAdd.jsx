@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import { useLocation } from "react-router-dom";
 import { db } from "./firebase/config";
 import { getDocs, collection } from "firebase/firestore";
+import AppNavbar from "./AppNavbar";
 
 const TaskAdd = () => {
   const [userData, setUserData] = useState([]);
@@ -25,6 +25,7 @@ const TaskAdd = () => {
           setUserData(user);
         }
       } catch (err) {
+        alert(err);
         console.error(err);
       }
     };
@@ -35,10 +36,7 @@ const TaskAdd = () => {
 
   return (
     <div>
-      <section className="flex bg-blue-400 text-white p-9 justify-evenly items-center">
-        <h2>Organize Your day today</h2>
-        <h1 className=" btn btn-outline-warning text-xl flex flex-end text-white ">{userData.username}</h1>
-      </section>
+      <AppNavbar {...userData} />
     </div>
   );
 };
