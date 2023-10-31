@@ -129,18 +129,17 @@ const Login = () => {
                 </label>
               </div>
 
-              <div>
-                <button type="submit" className="btn btn-outline-primary">
-                  Login
-                </button>
-              </div>
+              <button
+                type="submit"
+                className=" bg-blue-500 hover:text-blue-500 hover:bg-blue-700 btn text-white"
+              >
+                Login
+              </button>
             </form>
             <section className="my-4">
               <span>Not registered yet? </span>
               <NavLink to="/register">
-                <button className="btn bg-yellow-500 text-white hover:bg-amber-500 font-bold  ">
-                  Sign up
-                </button>
+                <button className="btn btn-outline-success ">Sign up</button>
               </NavLink>
             </section>
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "./firebase/config";
 import { getDocs, collection } from "firebase/firestore";
 import AppNavbar from "./AppNavbar";
+import NoUser from "./NoUser";
 
 const TaskAdd = () => {
   const [userData, setUserData] = useState([]);
@@ -10,6 +11,7 @@ const TaskAdd = () => {
   // const location = useLocation();
   // return location;
   let loggedInUser = localStorage.getItem("userId");
+  const isLoggedIn = !!loggedInUser;
   useEffect(() => {
     const getUserData = async () => {
       try {
@@ -34,11 +36,7 @@ const TaskAdd = () => {
 
   // console.log("current User ", loggedInUser);
 
-  return (
-    <div>
-      <AppNavbar {...userData} />
-    </div>
-  );
+  return <div>{isLoggedIn ? <AppNavbar {...userData} /> : <NoUser />}</div>;
 };
 
 export default TaskAdd;
