@@ -39,13 +39,11 @@ const Login = () => {
         password
       );
       const user = userCredentials.user;
-      console.log(user.uid);
       localStorage.setItem("userId", user.uid);
 
       navigate("/addtask", { state: { user: user?.uid } });
       navigate("/addtask", { state: { user: user?.uid } });
     } catch (error) {
-      console.log(error);
       if (error) {
         handleLoginError();
       }

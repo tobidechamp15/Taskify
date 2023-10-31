@@ -57,7 +57,6 @@ const Signup = () => {
         await sendEmailVerification(response.user);
         window.location.href = "/login";
         // useNavigate("/");
-        console.log(response.user);
       } catch (err) {
         if (err.code === "auth/email-already-in-use") {
           setErrorMessage("This user already exists", err);
@@ -95,7 +94,7 @@ const Signup = () => {
 
     setDoc(userDocRef, userProfileData)
       .then(() => {
-        console.log("User profile added to the firestore successfully");
+        return true;
       })
       .catch((error) => {
         console.error(
