@@ -10,6 +10,7 @@ const Dropdown = ({ handleDropdown }) => {
     localStorage.removeItem("userId");
     navigate("/");
   };
+
   const dropdownClassName = handleDropdown
     ? "flex flex-col gap-2  bg-white rounded-lg border  text-black absolute   right-[20px] mt-1 transition-all ease-in-out"
     : "p-0 m-0 h-0";
