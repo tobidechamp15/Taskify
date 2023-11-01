@@ -1,4 +1,11 @@
 {
+    "cSpell.words": [
+        "firestore",
+        "Gabarito",
+        "Svgjs",
+        "Taskify",
+        "Xmark"
+    ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#3399ff",
         "activityBar.background": "#3399ff",

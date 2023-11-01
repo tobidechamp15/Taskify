@@ -1,38 +1,223 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+}
+/* Apply styles to the entire website's scrollbar for WebKit-based browsers (Chrome, Safari) */
+body::-webkit-scrollbar {
+  background: #3b10b1;
+  width: 8px; /* Width of the scrollbar */
+  height: 0px; /* Width of the scrollbar */
+}
+body::-webkit-scrollbar:hover {
+  width: 10px; /* Width of the scrollbar */
+  width: 10px; /* Width of the scrollbar */
 }
 
-.App-logo {
-  height: 40vmin;
+body::-webkit-scrollbar-thumb {
+  background-color: #d6d4d4; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners of the scrollbar thumb */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  width: 10px;
+  background-color: #04095c; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners of the scrollbar thumb */
+}
+
+/* Apply styles to the entire website's scrollbar for Firefox and some other browsers */
+body {
+  scrollbar-width: 20px; /* Thin scrollbar width */
+  scrollbar-color: #fd2e2e blue; /* Scrollbar thumb and track color */
+}
+.form__group {
+  position: relative;
+  padding: 20px 0 0;
+  width: 100%;
+  /* max-width: 180px; */
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #9b9b9b;
+  border-top: -0;
+  outline: 0;
+  font-size: 17px;
+  /* color: #fff; */
+  padding: 7px;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 17px;
+  cursor: text;
+  top: 20px;
+  padding: 7px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #070ab3;
+  font-weight: 600;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #116399, #38caef);
+  border-image-slice: 1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: -10px;
+  display: block;
+  transition: 0.2s;
+  font-size: 17px;
+  color: #38caef;
+  font-weight: 700;
+}
+
+/* reset input */
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+g {
+  transform: matrix(1.15, 0, 0, 1.15, -5.75, 0);
+  fill: rgb(251, 156, 42);
+}
+g {
+  transform: matrix(1.55556, 0, 0, 1.55556, 118.222, 99.5066);
+  fill: url(#SvgjsLinearGradient1748);
+  transform: matrix(3.54653, 0, 0, 3.54653, 21, 239.839);
+  fill: rgb(19, 125, 197);
+}
+/* Style for the modal container */
+.error-modal {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1; /* Ensure it's above other content */
 }
 
-.App-link {
-  color: #61dafb;
+/* Style for the modal content */
+.error-content {
+  background-color: #fff; /* Background color */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Drop shadow */
+  text-align: center;
+  padding: 20px;
+  height: 50%;
+  width: 60%;
+  /* padding: 10%; */
+  position: relative;
+  /* width: 300px; Adjust the width as needed */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Style for the close button (X) */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Style for the error message text */
+.error-message {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+@media (min-width: 1024px) and (max-width: 1361px) {
+  .form-width {
+    width: 50% !important;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+.loader {
+  width: 8px;
+  height: 40px;
+  border-radius: 4px;
+  display: block;
+  background-color: currentColor;
+  margin: 20px auto;
+  position: relative;
+  color: blue;
+  animation: animloader 0.3s 0.3s linear infinite alternate;
+}
+
+.loader::after,
+.loader::before {
+  content: "";
+  width: 8px;
+  height: 40px;
+  border-radius: 4px;
+  background: currentColor;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  animation: animloader 0.3s 0.45s linear infinite alternate;
+}
+
+.loader::before {
+  left: -20px;
+  animation-delay: 0s;
+}
+
+@keyframes animloader {
+  0% {
+    height: 8px;
+  }
+
+  100% {
+    height: 89px;
+  }
+}
+
+.background-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.moving-image {
+  position: absolute;
+  top: 0;
+  left: 0%; /* Start position, completely outside the container */
+  width: 200%; /* Set the width of the image */
+  height: 100%;
+  opacity: 0.08;
+  background: url("./assets/bg-home.png");
+  background-size: cover;
+  animation: moveLeft 30s linear infinite; /* Adjust the duration as needed */
+}
+
+@keyframes moveLeft {
+  0% {
+    left: 0%; /* Start position, completely outside the container */
+  }
+  100% {
+    left: -100%; /* End position, completely outside the container */
   }
 }
