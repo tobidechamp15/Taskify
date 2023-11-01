@@ -3,10 +3,13 @@ import { db } from "./firebase/config";
 import { getDocs, collection } from "firebase/firestore";
 import AppNavbar from "./AppNavbar";
 import NoUser from "./NoUser";
+import AddTask from "./AddTask";
 
 const TaskAdd = () => {
   const [userData, setUserData] = useState([]);
   const users = collection(db, "users");
+  const [tasks, setTasks] = useState([]); // Store the retrieved tasks
+
   // const { userId } = useLocation();
   // const location = useLocation();
   // return location;
@@ -23,6 +26,7 @@ const TaskAdd = () => {
         const user = filteredData.find((data) => data.id === loggedInUser);
 
         if (user) {
+          console.log(user);
           setUserData(user);
         }
       } catch (err) {
@@ -32,8 +36,40 @@ const TaskAdd = () => {
     };
     getUserData();
   }, [loggedInUser]);
+  const fetchTasks = async () => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      const userTasksRef = collection(db, "tasks", userId, "userTasks");
 
-  return <div>{isLoggedIn ? <AppNavbar {...userData} /> : <NoUser />}</div>;
+      try {
+        const querySnapshot = await getDocs(userTasksRef);
+        const tasksData = [];
+
+        querySnapshot.forEach((doc) => {
+          tasksData.push({ id: doc.id, ...doc.data() });
+        });
+        setTasks(tasksData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+  console.log(tasks);
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+  return (
+    <div>
+      {isLoggedIn ? (
+        <>
+          <AppNavbar {...userData} />
+          <AddTask />
+        </>
+      ) : (
+        <NoUser />
+      )}
+    </div>
+  );
 };
 
 export default TaskAdd;
