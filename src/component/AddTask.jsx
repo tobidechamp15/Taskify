@@ -3,14 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import "firebase/firestore";
 import { db } from "./firebase/config";
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
+import { collection, addDoc } from "firebase/firestore";
 
 const AddTask = () => {
   const [showTaskInput, setShowTaskInput] = useState(false);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
-  const [tasks, setTasks] = useState([]); // Store the retrieved tasks
+  //   const [tasks, setTasks] = useState([]); // Store the retrieved tasks
 
   const handleTaskInput = () => {
     setShowTaskInput(!showTaskInput);
@@ -34,34 +33,13 @@ const AddTask = () => {
         // Clear the input fields
         setTitle("");
         setDetail("");
+        window.location.reload(); // Reload the window
       } catch (error) {
         console.error("Error creating task:", error);
       }
     }
   };
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
-  const fetchTasks = async () => {
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      const userTasksRef = collection(db, "tasks", userId, "userTasks");
-
-      try {
-        const querySnapshot = await getDocs(userTasksRef);
-        const tasksData = [];
-
-        querySnapshot.forEach((doc) => {
-          tasksData.push({ id: doc.id, ...doc.data() });
-        });
-        setTasks(tasksData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-  console.log(tasks);
   return (
     <div className="flex flex-col">
       <section className="flex justify-between items-center p-3">

@@ -4,6 +4,7 @@ import { getDocs, collection } from "firebase/firestore";
 import AppNavbar from "./AppNavbar";
 import NoUser from "./NoUser";
 import AddTask from "./AddTask";
+import DisplayTasks from "./DisplayTasks";
 
 const TaskAdd = () => {
   const [userData, setUserData] = useState([]);
@@ -26,7 +27,7 @@ const TaskAdd = () => {
         const user = filteredData.find((data) => data.id === loggedInUser);
 
         if (user) {
-          console.log(user);
+          // console.log(user);
           setUserData(user);
         }
       } catch (err) {
@@ -54,7 +55,7 @@ const TaskAdd = () => {
       }
     }
   };
-  console.log(tasks);
+  // console.log(tasks);
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -64,6 +65,7 @@ const TaskAdd = () => {
         <>
           <AppNavbar {...userData} />
           <AddTask />
+          <DisplayTasks {...tasks} />
         </>
       ) : (
         <NoUser />
