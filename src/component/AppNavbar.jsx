@@ -12,7 +12,7 @@ const AppNavbar = (props) => {
     setShowDropdownComponent(!showDropdownComponent);
   };
   const user = props;
-  console.log(user);
+  // console.log(user);
   return (
     <div>
       <section className="flex justify-between px-[40px] bg-blue-700 items-center text-white">
