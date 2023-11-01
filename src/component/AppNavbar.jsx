@@ -12,6 +12,7 @@ const AppNavbar = (props) => {
     setShowDropdownComponent(!showDropdownComponent);
   };
   const user = props;
+  console.log(user);
   return (
     <div>
       <section className="flex justify-between px-[40px] bg-blue-700 items-center text-white">
@@ -26,7 +27,7 @@ const AppNavbar = (props) => {
               icon={faUser}
               className="text-xl bg-gray-300 rounded-full  p-[10px]"
             />
-            <span className="text-blue-400 md:block hidden">
+            <span className="text-blue-400 md:block xsm:hidden">
               {user.username}
             </span>
           </div>
