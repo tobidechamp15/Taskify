@@ -133,7 +133,7 @@ const Signup = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-100 flex flex-col justify-center items-center mt-[25%] -lg">
+        <div className="w-100 flex flex-col justify-center items-center h-screen -lg">
           <div className="flex flex-col xs:h-full justify-evenly xs:w-full xs:mx-1 w-[60%] md:w-[50%] form-width lg:w-[30%] sm:h-  p-[5%] md:p-[5%} shadow-lg">
             <Link
               to="/"
@@ -146,7 +146,7 @@ const Signup = () => {
             </div>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-2 text-black  items-center justify-center self-center w-100 "
+              className="flex flex-col gap-2 items-center justify-center self-center w-100 "
             >
               <div className="form__group field">
                 <input
@@ -219,9 +219,7 @@ const Signup = () => {
             <section className="my-4">
               <span>If you are a member </span>
               <NavLink to="/login">
-                <button className="btn bg-green-600 text-white hover:bg-green-500 font-bold  ">
-                  Login
-                </button>
+                <button className="text-blue-400 ">Login</button>
               </NavLink>
             </section>
           </div>

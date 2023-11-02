@@ -84,7 +84,7 @@ const Login = () => {
             >
               <img src={logo} alt="logo" className="w-[100px]" />
             </NavLink>
-            <div className="text-2xl text-blue-400 font-bold text-center">
+            <div className="text-2xl text-blue-500 font-bold text-center">
               Welcome Back !
             </div>
 
@@ -127,17 +127,14 @@ const Login = () => {
                 </label>
               </div>
 
-              <button
-                type="submit"
-                className=" bg-blue-500 hover:text-blue-500 hover:bg-blue-700 btn text-white"
-              >
+              <button type="submit" className=" btn btn-outline-primary">
                 Login
               </button>
             </form>
             <section className="my-4">
               <span>Not registered yet? </span>
               <NavLink to="/register">
-                <button className="btn btn-outline-success ">Sign up</button>
+                <button className="text-blue-500 ">Sign up</button>
               </NavLink>
             </section>
           </div>

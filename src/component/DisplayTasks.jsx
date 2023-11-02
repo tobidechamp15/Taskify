@@ -20,7 +20,7 @@ const DisplayTasks = (props) => {
             <h2 className="text-primary text-xl">{props[key].title}</h2>
             <p>{props[key].detail}</p>
           </section>
-          <div className="flex gap-2">
+          <div className="flex items-center  gap-2">
             {completedTasks[index] && (
               <span className="text-green-500 font-bold text-xl">
                 Completed
