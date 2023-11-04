@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const Navbar = ({ toggleSidebar, isVisible }) => {
   return (
-    <div className="shadow-lg flex justify-between xsm:px-4 md:justify-evenly bg-blue-700 py-2 fixed top-0 w-100 items-center z-40">
+    <div className="shadow-lg flex justify-between xsm:px-4 md:justify-evenly bg-blue-700 py-4 fixed top-0 w-100 items-center z-40">
       <Link to="/">
         <img src={logo} className="w-[110px]" />
       </Link>

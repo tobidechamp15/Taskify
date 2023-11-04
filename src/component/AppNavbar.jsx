@@ -15,13 +15,13 @@ const AppNavbar = (props) => {
   // console.log(user);
   return (
     <>
-      <section className="flex justify-between px-[40px] bg-blue-700 items-center text-white">
+      <section className="flex justify-between px-[40px] bg-blue-700 py-3 items-center text-white">
         <span className="hidden md:flex">Organize your day today</span>
         <img src={logo} alt="logo" className="w-[130px]" />
         <section>
           <div
             onClick={handleDropdown}
-            className="flex gap-2 items-center md:bg-gray-100 md:rounded-2xl md:p-2"
+            className="flex gap-2 items-center md:bg-gray-100 md:rounded-2xl md:p-2 cursor-pointer"
           >
             <FontAwesomeIcon
               icon={faUser}
