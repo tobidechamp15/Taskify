@@ -131,12 +131,17 @@ const Login = () => {
                 Login
               </button>
             </form>
-            <section className="my-4">
-              <span>Not registered yet? </span>
-              <NavLink to="/register">
-                <button className="text-blue-500 ">Sign up</button>
+            <div>
+              <NavLink to="/reset" className="text-red-400 font-semibold">
+                Forgotten Password?
               </NavLink>
-            </section>
+              <section className="my-1">
+                <span>Not registered yet? </span>
+                <NavLink to="/register">
+                  <button className="text-blue-500 ">Sign up</button>
+                </NavLink>
+              </section>
+            </div>
           </div>
           {showErrorModal && (
             <div className="error-modal">
