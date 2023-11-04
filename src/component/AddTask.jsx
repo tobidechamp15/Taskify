@@ -19,7 +19,7 @@ const AddTask = () => {
     const userId = localStorage.getItem("userId");
 
     if (userId) {
-      const userTasksRef = collection(db, "tasks", userId, "userTasks"); // Reference to a subcollection under the user's document
+      const userTasksRef = collection(db, "tasks", userId, "userTasks"); // Reference to a sub-collection under the user's document
 
       const userTaskData = {
         title: title,
