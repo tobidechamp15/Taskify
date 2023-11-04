@@ -11,6 +11,8 @@ import Signup from "./component/Signup";
 import Login from "./component/Login";
 import Landing from "./component/Landing";
 import TaskAdd from "./component/TaskAdd";
+import ResetPassword from "./component/ResetPassword";
+import ResetPasswordMessage from "./component/ResetPasswordMessage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
   {
     path: "/addtask",
     element: <TaskAdd />,
+  },
+  {
+    path: "/reset",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/reset-message",
+    element: <ResetPasswordMessage />,
   },
 ]);
 

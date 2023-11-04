@@ -60,7 +60,7 @@ const TaskAdd = () => {
     fetchTasks();
   }, []);
   return (
-    <div>
+    <>
       {isLoggedIn ? (
         <>
           <AppNavbar {...userData} />
@@ -70,7 +70,7 @@ const TaskAdd = () => {
       ) : (
         <NoUser />
       )}
-    </div>
+    </>
   );
 };
 
