@@ -12,9 +12,8 @@ const Landing = () => {
     setVisible(!isVisible);
   };
   return (
-    <div className="mt-[90px]">
+    <div className="mt-[30px]">
       <Navbar toggleSidebar={toggleSidebar} isVisible={isVisible} />
-
       <Sidebar isVisible={isVisible} toggleSidebar={toggleSidebar} />
       <Home />
       <Description />
