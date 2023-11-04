@@ -23,14 +23,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!navigator.onLine) {
-      // Handle the case where the user is offline
-      setErrorMessage(
-        "No internet connection. Please check your connection and try again."
-      );
-      setShowErrorModal(true);
-      return;
-    }
     try {
       const auth = getAuth(app);
       const userCredentials = await signInWithEmailAndPassword(
@@ -40,16 +32,23 @@ const Login = () => {
       );
       const user = userCredentials.user;
       localStorage.setItem("userId", user.uid);
-
+      setErrorMessage(null);
       navigate("/addtask", { state: { user: user?.uid } });
       navigate("/addtask", { state: { user: user?.uid } });
     } catch (error) {
       if (error) {
         handleLoginError();
+      } else {
+        setShowErrorModal(true);
+        setErrorMessage("Check your Internet Connection");
       }
     } finally {
       setLoading(false);
     }
+  };
+  const handleLoginError = () => {
+    setShowErrorModal;
+    setLoginError(true);
   };
 
   const closeErrorModal = () => {
@@ -64,11 +63,6 @@ const Login = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setLoginError(false);
-  };
-
-  const handleLoginError = () => {
-    setShowErrorModal;
-    setLoginError(true);
   };
 
   return (
@@ -156,9 +150,15 @@ const Login = () => {
                     bounce
                   />
                 </div>
-                <p className="text-red-400  font-bold text-2xl">
-                  {errorMessage}
-                </p>
+                <div className="flex flex-col gap-3">
+                  <p className="text-3xl text-red-500 ">
+                    Oops <FontAwesomeIcon icon={faCircleExclamation} bounce />
+                  </p>
+
+                  <p className="text-red-400  font-bold text-2xl">
+                    {errorMessage}
+                  </p>
+                </div>
               </div>
             </div>
           )}
