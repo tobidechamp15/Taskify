@@ -25,26 +25,31 @@ const AddTask = () => {
 
   const handleAddTask = async () => {
     const userId = localStorage.getItem("userId");
+    if (title == "" && detail == "") {
+      alert("Please fill out all fields!");
+    } else {
+      setShowTaskInput(!showTaskInput);
+      if (userId) {
+        const userTasksRef = collection(db, "tasks", userId, "userTasks"); // Reference to a sub-collection under the user's document
 
-    if (userId) {
-      const userTasksRef = collection(db, "tasks", userId, "userTasks"); // Reference to a sub-collection under the user's document
+        const userTaskData = {
+          title: title,
+          detail: detail,
+          completed: false,
+          // Add other user-specific data as needed
+        };
 
-      const userTaskData = {
-        title: title,
-        detail: detail,
-        completed: false,
-        // Add other user-specific data as needed
-      };
-
-      try {
-        const newDocRef = await addDoc(userTasksRef, userTaskData);
-        console.log("Document added with ID: ", newDocRef.id);
-        // Clear the input fields
-        setTitle("");
-        setDetail("");
-        // window.location.reload(); // Reload the window
-      } catch (error) {
-        console.error("Error creating task:", error);
+        try {
+          const newDocRef = await addDoc(userTasksRef, userTaskData);
+          console.log("Document added with ID: ", newDocRef.id);
+          // return newDocRef;
+          // Clear the input fields
+          setTitle("");
+          setDetail("");
+          // window.location.reload(); // Reload the window
+        } catch (error) {
+          console.error("Error creating task:", error);
+        }
       }
     }
   };
@@ -88,7 +93,7 @@ const AddTask = () => {
             <span>Date : {currentDate}</span> <span>Time : {currentTime}</span>
           </div>
 
-          <section className="flex flex-col gap-3 px-3 py-4 pt-2">
+          <form className="flex flex-col gap-3 px-3 py-4 pt-2">
             <div className="flex flex-col gap-2 ">
               <label htmlFor="titleInput">Title</label>
               <input
@@ -97,6 +102,7 @@ const AddTask = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 id="titleInput"
                 className="w-100 form-control"
+                required
               />
             </div>
             <div className="flex flex-col gap-2 ">
@@ -109,25 +115,19 @@ const AddTask = () => {
                 className="form-control"
               />
             </div>
-            {/* <div className="flex gap-3">
-              <input
-                type="checkbox"
-                value={checked}
-                onChange={(e) => setChecked(e.target.checked)}
-              />
-              <span className="text-xl text-green-400 font-semibold">
-                Completed
+            <div className="flex justify-between px-3 items-center">
+              <span className="btn btn-secondary" onClick={handleTaskInput}>
+                Cancel
               </span>
-            </div> */}
-          </section>
-          <div className="flex justify-between px-3 items-center">
-            <span className="btn btn-secondary" onClick={handleTaskInput}>
-              Cancel
-            </span>
-            <span className="btn btn-outline-primary" onClick={handleAddTask}>
-              Create
-            </span>
-          </div>
+              <button
+                type="submit"
+                className="btn btn-outline-primary"
+                onClick={handleAddTask}
+              >
+                Create
+              </button>
+            </div>
+          </form>
         </section>
       </section>
     </div>
