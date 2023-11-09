@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase/config";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, onSnapshot } from "firebase/firestore";
 import AppNavbar from "./AppNavbar";
 import NoUser from "./NoUser";
 import AddTask from "./AddTask";
@@ -41,18 +41,30 @@ const TaskAdd = () => {
     const userId = localStorage.getItem("userId");
     if (userId) {
       const userTasksRef = collection(db, "tasks", userId, "userTasks");
-
-      try {
-        const querySnapshot = await getDocs(userTasksRef);
-        const tasksData = [];
-
+      onSnapshot(userTasksRef, (querySnapshot) => {
+        const updatedTasks = [];
         querySnapshot.forEach((doc) => {
-          tasksData.push({ id: doc.id, ...doc.data() });
+          updatedTasks.push({
+            id: doc.id,
+            ...doc.data(),
+          });
         });
-        setTasks(tasksData);
-      } catch (error) {
-        console.error(error);
-      }
+        setTasks(updatedTasks);
+      });
+
+      // try {
+      //   const querySnapshot = await getDocs(userTasksRef);
+      //   const tasksData = [];
+
+      //   querySnapshot.forEach((doc) => {
+      //     tasksData.push({ id: doc.id, ...doc.data() });
+      //   });
+      //   tasksData.sort((a, b) => b.index - a.index);
+
+      //   setTasks(tasksData);
+      // } catch (error) {
+      //   console.error(error);
+      // }
     }
   };
   // console.log(tasks);
