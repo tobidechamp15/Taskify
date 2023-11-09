@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "firebase/firestore";
 import { db } from "./firebase/config";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const DisplayTasks = (props) => {
   // console.log(props);
@@ -16,7 +16,7 @@ const DisplayTasks = (props) => {
     setCompletedTasks([completedTasks[index], id]);
 
     const userId = localStorage.getItem("userId");
-    console.log(userId);
+
     try {
       // Update the 'completed' field of the specific task in Firestore
       const taskRef = doc(db, "tasks", userId, "userTasks", id);
@@ -35,13 +35,69 @@ const DisplayTasks = (props) => {
     }
   };
 
-  useEffect(() => {
-    handleCompletedTasks();
-  }, []);
+  const userId = localStorage.getItem("userId");
+  const handleDeleteTasks = async (id) => {
+    try {
+      // Delete a specific task in Firestore
+      const taskRef = doc(db, "tasks", userId, "userTasks", id);
+      await deleteDoc(taskRef);
+    } catch (error) {
+      console.error("Error deleting task: ", error);
+    }
+  };
+  const hasTasks = Object.keys(props).length > 0;
 
   return (
-    <div className="flex flex-col gap-2">
-      {Object.keys(props).map((key, index) => (
+    <div className="flex flex-col gap-2 justify-center items-center">
+      {hasTasks ? (
+        Object.keys(props).map((key, index) => (
+          <div
+            key={key}
+            className="flex gap-2 rounded-md justify-between m-3 px-3 py-4 bg-gray-200 shadow-md items-center"
+          >
+            <section>
+              <h2 className="text-primary text-xl">{props[key].title}</h2>
+              <p>{props[key].detail}</p>
+            </section>
+            <div className="flex items-center gap-3">
+              {props[key].completed && (
+                <span className="text-green-500 font-bold text-xl">
+                  Completed
+                </span>
+              )}
+              {/* ... Rest of your rendering code */}
+              <div className="flex bg-white p-1">
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  onClick={() => {
+                    handleCompletedTasks(props[key].id, index);
+                  }}
+                  className={
+                    props[key].completed
+                      ? "text-green-600 cursor-pointer text-xl bg-white block opacity-100 transition-all ease-in-out duration-300"
+                      : "hover:text-green-600 text-xl cursor-pointer bg-white hover:bg-gray-200 opacity-0 transition-all ease-in-out duration-300"
+                  }
+                />
+              </div>
+              <div>
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  onClick={() => {
+                    handleDeleteTasks(props[key].id);
+                  }}
+                  className="text-red-600 cursor-pointer text-xl"
+                />
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="p-[5%] mt-[20%] shadow-lg rounded-lg w-fit bg-white flex justify-center items-center text-4xl text-blue-400 font-bold flex-col gap-2">
+          <span>No tasks has been added </span>
+          <span className=" m-2 btn btn-primary">Add Now</span>
+        </div>
+      )}
+      {/* {Object.keys(props).map((key, index) => (
         <div
           key={key}
           className="flex gap-2 rounded-md justify-between m-3 px-3 py-4 bg-gray-200 shadow-md items-center "
@@ -50,37 +106,15 @@ const DisplayTasks = (props) => {
             <h2 className="text-primary text-xl">{props[key].title}</h2>
             <p>{props[key].detail}</p>
           </section>
-          <div className="flex items-center  gap-2">
+          <div className="flex items-center gap-3">
             {props[key].completed && (
               <span className="text-green-500 font-bold text-xl">
                 Completed
               </span>
             )}
-            <FontAwesomeIcon
-              icon={faCheck}
-              onClick={() => {
-                handleCompletedTasks(props[key].id, index);
-              }}
-              className={
-                completedTasks[index]
-                  ? "text-green-600 cursor-pointer text-xl "
-                  : "hover:text-green-600 text-xl cursor-pointer"
-              }
-            />
-            {/* <label className="cursor-pointer checkbox-btn border-2 border-blue-400 bg-white pb-1">
-              <label htmlFor="checkbox"></label>
-              <input
-                type="checkbox"
-                id="checkbox"
-                value={props[key].completed}
-                onChange={() => handleCompletedTasks(index)}
-                className="hidden"
-              /> 
-              <span className="checkmark"></span>
-            </label> */}
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };
