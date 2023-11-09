@@ -53,7 +53,7 @@ const DisplayTasks = (props) => {
         Object.keys(props).map((key, index) => (
           <div
             key={key}
-            className="flex gap-2 rounded-md justify-between m-3 px-3 py-4 bg-gray-200 shadow-md items-center"
+            className="flex gap-2 rounded-md justify-between  px-3 py-4 bg-gray-200 shadow-md items-center w-100 mx-4"
           >
             <section>
               <h2 className="text-primary text-xl">{props[key].title}</h2>
