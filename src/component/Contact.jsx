@@ -25,6 +25,7 @@ const Contact = () => {
               type="text"
               name="name"
               id="name"
+              onChange={(e) => setName(e.target.value)}
               value={name}
               className="form__field"
               placeholder="Name"
@@ -36,6 +37,7 @@ const Contact = () => {
             <input
               type="text"
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="form__field"
               placeholder="Email"
               required
@@ -50,6 +52,7 @@ const Contact = () => {
             cols="50"
             name="message"
             id="message"
+            onChange={(e) => setMessage(e.target.value)}
             value={message}
             className="form__field form-control"
             placeholder="Subject"
