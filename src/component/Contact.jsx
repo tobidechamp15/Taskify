@@ -1,12 +1,31 @@
+import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
+import { db } from "./firebase/config";
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [subject, setSubject] = useState("");
   // const [errorMsg, setErrorMsg] = useState(null);
 
-  function handleSubmit() {}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const userMessageRef = collection(db, "message");
+    const clientsMessage = {
+      name: name,
+      subject: subject,
+      email: email,
+      message: message,
+    };
+
+    try {
+      const newDocRef = await addDoc(userMessageRef, clientsMessage);
+      console.log(`Document written with ID: ${newDocRef.id}`);
+    } catch (err) {
+      console.log(`Failed to submit ${err}`);
+    }
+  };
   return (
     <div className=" flex item-center justify-center md:-mt-[80px] md:mb-[100px] ">
       <form
@@ -52,8 +71,8 @@ const Contact = () => {
             cols="50"
             name="message"
             id="message"
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
+            onChange={(e) => setSubject(e.target.value)}
+            value={subject}
             className="form__field form-control"
             placeholder="Subject"
             required
@@ -64,6 +83,7 @@ const Contact = () => {
           <textarea
             type="text"
             value={message}
+            onChange={(e) => setMessage(e.target.value)}
             className="form__field"
             placeholder="Name"
             required

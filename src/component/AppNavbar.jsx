@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/white logo.png";
 import Dropdown from "./Dropdown";
+import { NavLink } from "react-router-dom";
 
 const AppNavbar = (props) => {
   const [showDropdownComponent, setShowDropdownComponent] = useState(false);
@@ -17,7 +18,9 @@ const AppNavbar = (props) => {
     <>
       <section className="flex justify-between px-[40px] bg-blue-700 py-3 items-center text-white">
         <span className="hidden md:flex">Organize your day today</span>
-        <img src={logo} alt="logo" className="w-[130px]" />
+        <NavLink to="/">
+          <img src={logo} alt="logo" className="w-[130px]" />
+        </NavLink>
         <section>
           <div
             onClick={handleDropdown}
