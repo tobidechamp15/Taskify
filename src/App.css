@@ -255,3 +255,7 @@ g {
 .message-container a:hover {
   text-decoration: underline;
 }
+
+.your-div {
+  width: 200px; /* Set your desired width */
+}

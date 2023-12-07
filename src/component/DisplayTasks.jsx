@@ -12,7 +12,6 @@ const DisplayTasks = (props) => {
   const [completedTasks, setCompletedTasks] = useState([]);
 
   const handleCompletedTasks = async (id, index) => {
-    console.log(id);
     setCompletedTasks([completedTasks[index], id]);
 
     const userId = localStorage.getItem("userId");
@@ -55,18 +54,25 @@ const DisplayTasks = (props) => {
             key={key}
             className="flex gap-2 rounded-md justify-between  px-3 py-4 bg-gray-200 shadow-md items-center w-100 mx-4"
           >
-            <section>
-              <h2 className="text-primary text-xl">{props[key].title}</h2>
+            <section className="flex flex-col w-50">
+              <span className="text-primary   md:text-xl whitespace-normal  w-full overflow-hidden">
+                {props[key].title}
+              </span>
               <p>{props[key].detail}</p>
             </section>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap justify-center">
               {props[key].completed && (
-                <span className="text-green-500 font-bold text-xl">
+                <span className="text-green-500 font-bold md:text-xl">
                   Completed
                 </span>
               )}
-              {/* ... Rest of your rendering code */}
-              <div className="flex bg-white p-1">
+              <div
+                className={
+                  props[key].completed
+                    ? "text-green-600 cursor-pointer text-xl  block bg-gray-100 hover:bg-gray-300 p-1 rounded-lg opacity-100 transition-all ease-in-out duration-300"
+                    : "hover:text-green-600 text-xl cursor-pointer bg-white hover:bg-gray-200 px-1 transition-all ease-in-out duration-300"
+                }
+              >
                 <FontAwesomeIcon
                   icon={faCheck}
                   onClick={() => {
@@ -74,8 +80,8 @@ const DisplayTasks = (props) => {
                   }}
                   className={
                     props[key].completed
-                      ? "text-green-600 cursor-pointer text-xl bg-white block opacity-100 transition-all ease-in-out duration-300"
-                      : "hover:text-green-600 text-xl cursor-pointer bg-white hover:bg-gray-200 opacity-0 transition-all ease-in-out duration-300"
+                      ? "text-green-600 cursor-pointer text-xl  block bg-gray-100 hover:bg-gray-300 p-1 rounded-lg opacity-100 transition-all ease-in-out duration-300"
+                      : "hover:text-green-600 text-xl cursor-pointer bg-white hover:bg-gray-200 opacity-0  transition-all ease-in-out duration-300"
                   }
                 />
               </div>
