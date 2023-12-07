@@ -23,7 +23,9 @@ const AddTask = () => {
     setCurrentTime(currentDate.toLocaleTimeString());
   };
 
-  const handleAddTask = async () => {
+  const handleAddTask = async (e) => {
+    e.preventDefault(); // Prevents the default form submission behavior
+
     const userId = localStorage.getItem("userId");
     if (title == "" && detail == "") {
       alert("Please fill out all fields!");
@@ -120,7 +122,7 @@ const AddTask = () => {
                 Cancel
               </span>
               <button
-                type="submit"
+                type="button"
                 className="btn btn-outline-primary"
                 onClick={handleAddTask}
               >
