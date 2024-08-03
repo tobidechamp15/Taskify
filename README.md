@@ -4,7 +4,7 @@
 
 ## Live Demo
 
-[Live Demo](https://taskifyhub.netlify.app/)
+[Live Demo](https://taskify-tobiloba.vercel.app/)
 
 ## Project Status
 
