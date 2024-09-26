@@ -6,12 +6,6 @@
 
 [Live Demo](https://taskify-tobiloba.vercel.app/)
 
-## Project Status
-
-This project is currently in development. It's not ready for use yet, but I plan to make it available as soon as possible.
-
-This project is currently in development. Users can add tasks and see visual data representation. Functionality to update and delete tasks is still in progress.
-
 ## Features
 
 - Create tasks.
